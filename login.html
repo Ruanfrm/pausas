@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/login_colaborador.css">
+  <title>Login do Colaborador</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="back-login">
+      <h1>Login do Colaborador</h1>
+      <form id="colaboradorLoginForm">
+        <label for="adminEmail">Email:</label>
+        <input type="email" id="colaboradorEmail" required>
+        <div class="error-message" id="adminEmailError"></div>
+        <label for="adminPassword">Senha:</label>
+        <input type="password" id="colaboradorPassword" required>
+        <div class="error-message" id="adminPasswordError"></div>
+        <button type="submit">Entrar</button>
+      </form></div>
+    
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <script src="./js/firebase-config.js"></script>
+  <script>
+   
+
+    const db = firebase.firestore();
+
+    // Referência ao formulário de login do colaborador
+    const colaboradorLoginForm = document.getElementById('colaboradorLoginForm');
+
+    colaboradorLoginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const colaboradorEmail = document.getElementById('colaboradorEmail').value;
+      const colaboradorPassword = document.getElementById('colaboradorPassword').value;
+
+      firebase.auth().signInWithEmailAndPassword(colaboradorEmail, colaboradorPassword)
+        .then((userCredential) => {
+          // Redirecionar para a página do colaborador após o login
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          console.error("Erro ao fazer login do colaborador: ", error);
+          alert("Erro ao fazer login do colaborador. Verifique as credenciais e tente novamente.");
+        });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Restante das meta tags -->
+  <link rel="stylesheet" href="./css/add_colaborador.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="col-12">
+      <a href="./admin.html"><img src="./voltar.png" width="25px"></div>
+      </a>
+    <h1>Adicionar Novo Colaborador</h1>
+    <form id="addCollaboratorForm">
+      <label for="collaboratorName">Nome do Colaborador:</label>
+      <input type="text" id="collaboratorName" required>
+      <div class="error-message" id="collaboratorNameError"></div>
+      <label for="collaboratorEmail">E-mail:</label>
+      <input type="email" id="collaboratorEmail" required>
+      <div class="error-message" id="collaboratorEmailError"></div>
+      <label for="collaboratorPassword">Senha:</label>
+      <input type="password" id="collaboratorPassword" required>
+      <div class="error-message" id="collaboratorPasswordError"></div>
+      <button class="btn btn-primary mt-2" type="submit">Adicionar Colaborador</button>
+    </form>
+    <div class="success-message" id="successMessage"></div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="./js/firebase-config.js"></script>
+  <script src="./js/adicionar_colaborador.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

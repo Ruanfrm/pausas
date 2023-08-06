@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Página de Administração</title>
+  <link rel="stylesheet" href="./css/teste.css">
+  <!-- Inclua o link para o Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Página de Administração</h1>
+    <a class="btn btn-info" href="./add_colaborador.html">Adcionar Colaborador</a>
+    <button class="btn btn-danger" type="button" onclick="logout()">Sair</button>
+
+    <h2>Gerenciar Pausas dos Colaboradores</h2>
+    
+
+    <!-- Formulário para inserir informações das pausas -->
+    <form id="pausaForm">
+      <div class="form-group">
+        <label for="colaborador">Colaborador:</label>
+        <select class="form-control" id="colaborador" required>
+          <option value="" disabled selected>Selecione o colaborador</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="diaSemana">Dia da Semana:</label>
+        <select class="form-control" id="diaSemana" required >
+          <option value="Segunda">Segunda-feira</option>
+          <option value="Terça">Terça-feira</option>
+          <option value="Quarta">Quarta-feira</option>
+          <option value="Quinta">Quinta-feira</option>
+          <option value="Sexta">Sexta-feira</option>
+          <option value="Sábado">Sábado</option>
+          <option value="Domingo">Domingo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="entrada">Entrada:</label>
+        <input type="time" class="form-control" id="entrada" required>
+      </div>
+      <div class="form-group">
+        <label for="pausa1">Pausa 1:</label>
+        <input type="time" class="form-control" id="pausa1" required>
+      </div>
+      <div class="form-group">
+        <label for="refeicao">Refeição:</label>
+        <input type="time" class="form-control" id="refeicao" required>
+      </div>
+      <div class="form-group">
+        <label for="pausa2">Pausa 2:</label>
+        <input type="time" class="form-control" id="pausa2" required>
+      </div>
+      <div class="form-group">
+        <label for="saida">Saída:</label>
+        <input type="time" class="form-control" id="saida" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Adicionar Pausa</button>
+    </form>
+
+    <h2>Pausas Cadastradas</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Colaborador</th>
+          <th>Dia da Semana</th>
+          <th>Entrada</th>
+          <th>Pausa 1</th>
+          <th>Refeição</th>
+          <th>Pausa 2</th>
+          <th>Saída</th>
+        </tr>
+      </thead>
+      <tbody id="pausasTable">
+        <!-- Aqui serão carregadas as pausas cadastradas pelo administrador -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Incluir o Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <!-- Configuração do Firebase -->
+  <script src="./js/firebase-config.js"></script>
+  <!-- Arquivo com o código JavaScript -->
+  <script src="./js/admin_dashboard.js"></script>
+  <script src="./js/admin.js"></script>
+</body>
+</html>
