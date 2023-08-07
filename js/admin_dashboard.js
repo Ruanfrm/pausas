@@ -1,4 +1,5 @@
 // seu-arquivo-admin.js
+
 const db = firebase.firestore();
 
 auth.onAuthStateChanged((user) => {
@@ -46,10 +47,33 @@ auth.onAuthStateChanged((user) => {
               <td>${data.refeicao}</td>
               <td>${data.pausa2}</td>
               <td>${data.saida}</td>
+              <td>
+                <button class="edit-btn" data-bs-toggle="tooltip"   title="Editar" ><i class="fas fa-edit" data-id="${doc.id}" ></i></button> 
+                <button class="delete-btn" data-bs-toggle="tooltip" title="Excluir" ><i class="fas fa-trash" data-id="${doc.id}"></i></button>
+              </td>
             `;
             pausasTable.appendChild(tr);
           });
+
+          // Adicionar eventos de clique para os botões de edição e exclusão
+          const editBtns = document.querySelectorAll('.edit-btn');
+          const deleteBtns = document.querySelectorAll('.delete-btn');
+
+          editBtns.forEach((btn) => {
+            btn.addEventListener('click', handleEditPausa);
+          });
+
+          deleteBtns.forEach((btn) => {
+            btn.addEventListener('click', handleDeletePausa);
+          });
         });
+
+              
+        // Inicializar os tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
     }
 
     // Atualizar a tabela de pausas ao selecionar um colaborador
@@ -98,3 +122,87 @@ auth.onAuthStateChanged((user) => {
     window.location.href = 'login_adm.html';
   }
 });
+
+// ...
+
+// Função para abrir o modal de edição de pausa
+function handleEditPausa(event) {
+  const pausaId = event.target.getAttribute('data-id');
+  console.log(pausaId)
+
+  const pausaRef = db.collection('pausas').doc(pausaId);
+  pausaRef.get()
+    .then((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+
+        // Preencher os campos do formulário com os dados da pausa atual
+        document.getElementById('editPausaDiaSemana').value = data.diaSemana;
+        document.getElementById('editPausaEntrada').value = data.entrada;
+        document.getElementById('editPausaPausa1').value = data.pausa1;
+        document.getElementById('editPausaRefeicao').value = data.refeicao;
+        document.getElementById('editPausaPausa2').value = data.pausa2;
+        document.getElementById('editPausaSaida').value = data.saida;
+
+        // Abrir o modal de edição
+        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+        editModal.show();
+
+        // Evento para salvar a pausa editada quando o formulário for enviado
+        document.getElementById('editPausaForm').addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          const editedPausa = {
+            diaSemana: document.getElementById('editPausaDiaSemana').value,
+            entrada: document.getElementById('editPausaEntrada').value,
+            pausa1: document.getElementById('editPausaPausa1').value,
+            refeicao: document.getElementById('editPausaRefeicao').value,
+            pausa2: document.getElementById('editPausaPausa2').value,
+            saida: document.getElementById('editPausaSaida').value,
+          };
+
+          // Atualizar a pausa no Firestore
+          pausaRef.update(editedPausa)
+          .then(() => {
+            console.log("Pausa atualizada com sucesso!");
+            editModal.hide(); // Fechar o modal de edição após a atualização
+            // Atualizar a tabela de pausas após a edição
+            // loadPausas(data.colaboradorId);
+          })
+            .catch((error) => {
+              console.error("Erro ao atualizar pausa: ", error);
+            });
+        });
+      } else {
+        console.log("Documento não encontrado!");
+      }
+    })
+    .catch((error) => {
+      console.error("Erro ao obter a pausa: ", error);
+    });
+}
+
+// Função para abrir o modal de confirmação de exclusão de pausa
+function handleDeletePausa(event) {
+  const pausaId = event.target.getAttribute('data-id');
+  const pausaRef = db.collection('pausas').doc(pausaId);
+
+  // Abrir o modal de exclusão
+  const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+  deleteModal.show();
+
+  // Evento para confirmar a exclusão quando o botão "Confirmar" for clicado
+  document.getElementById('deleteConfirmBtn').addEventListener('click', function () {
+    // Apagar a pausa no Firestore
+    pausaRef.delete()
+      .then(() => {
+        console.log("Pausa apagada com sucesso!");
+        deleteModal.hide(); // Fechar o modal de exclusão após a exclusão
+        // Atualizar a tabela de pausas após a exclusão
+        // loadPausas();
+      })
+      .catch((error) => {
+        console.error("Erro ao apagar pausa: ", error);
+      });
+  });
+}

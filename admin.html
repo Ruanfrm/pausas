@@ -5,14 +5,16 @@
   <link rel="stylesheet" href="./css/teste.css">
   <!-- Inclua o link para o Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
 </head>
 <body>
   <div class="container mt-5">
-    <h1>Página de Administração</h1>
-    <a class="btn btn-info" href="./add_colaborador.html">Adcionar Colaborador</a>
-    <button class="btn btn-danger" type="button" onclick="logout()">Sair</button>
+    <h1 class="text-center title">Página de Administração</h1>
+    <a class="btn btn-info btn-sm" href="./add_colaborador.html">Adcionar Colaborador</a>
+    <button class="btn btn-danger btn-sm" type="button" onclick="logout()">Sair</button>
 
-    <h2>Gerenciar Pausas dos Colaboradores</h2>
+    <h2 class="text-center title-2">Gerenciar Pausas dos Colaboradores</h2>
     
 
     <!-- Formulário para inserir informações das pausas -->
@@ -58,7 +60,7 @@
       <button type="submit" class="btn btn-primary">Adicionar Pausa</button>
     </form>
 
-    <h2>Pausas Cadastradas</h2>
+    <h2 class="text-center font-weight-bold mb-3">Pausas Cadastradas</h2>
     <table class="table">
       <thead>
         <tr>
@@ -77,14 +79,83 @@
     </table>
   </div>
 
+  
+<!-- Modal de Edição (editModal) -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Editar Pausa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="editPausaForm">
+          <div class="mb-3">
+            <label for="editPausaDiaSemana" class="form-label">Dia da Semana</label>
+            <input type="text" class="form-control" id="editPausaDiaSemana" required >
+          </div>
+          <div class="mb-3">
+            <label for="editPausaEntrada" class="form-label">Entrada</label>
+            <input type="time" class="form-control" id="editPausaEntrada" required>
+          </div>
+          <div class="mb-3">
+            <label for="editPausaPausa1" class="form-label">Pausa 1</label>
+            <input type="time" class="form-control" id="editPausaPausa1" required>
+          </div>
+          <div class="mb-3">
+            <label for="editPausaRefeicao" class="form-label">Refeição</label>
+            <input type="time" class="form-control" id="editPausaRefeicao" required>
+          </div>
+          <div class="mb-3">
+            <label for="editPausaPausa2" class="form-label">Pausa 2</label>
+            <input type="time" class="form-control" id="editPausaPausa2" required>
+          </div>
+          <div class="mb-3">
+            <label for="editPausaSaida" class="form-label">Saída</label>
+            <input type="time" class="form-control" id="editPausaSaida" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Exclusão (deleteModal) -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza de que deseja excluir esta pausa?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" id="deleteConfirmBtn" class="btn btn-danger">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
   <!-- Incluir o Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
   <!-- Configuração do Firebase -->
   <script src="./js/firebase-config.js"></script>
   <!-- Arquivo com o código JavaScript -->
   <script src="./js/admin_dashboard.js"></script>
   <script src="./js/admin.js"></script>
+
 </body>
 </html>
