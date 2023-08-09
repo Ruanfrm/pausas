@@ -29,6 +29,7 @@ auth.onAuthStateChanged((user) => {
 
       // Array para armazenar as pausas de cada dia da semana, começando de segunda (índice 0) até domingo (índice 6)
       const pausasPorDia = [[], [], [], [], [], [], []];
+      const pausas = [];
 
       snapshot.forEach((doc) => {
         const data = doc.data();
@@ -65,6 +66,8 @@ auth.onAuthStateChanged((user) => {
           <td>${pausa.saida}</td>
         `;
         pausasTable.appendChild(tr);
+          
+
 
         // Destacar o dia atual (today) na tabela
         if (getDiaSemanaId(pausa.diaSemana) === today) {
@@ -127,3 +130,59 @@ function logout() {
       });
   }
 }
+
+// script.js
+const popup = document.getElementById('popup');
+const dismissButton = document.getElementById('dismiss-btn');
+
+// Função para exibir o pop-up
+function exibirPopup() {
+    popup.style.display = 'flex';
+}
+
+// Função para fechar o pop-up
+function fecharPopup() {
+    popup.style.display = 'none';
+}
+
+// Função para exibir uma notificação do navegador
+function exibirNotificacao() {
+  if ('Notification' in window) {
+      Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+              const notificacao = new Notification('Hora da pausa!', {
+                  body: 'Aproveite o seu tempo de descanso.',
+              });
+              
+              notificacao.onclick = () => {
+                  exibirPopup();
+              };
+          }
+      });
+  }
+}
+
+// Função para verificar se é hora da pausa
+function verificarHoraPausa() {
+    const agora = new Date();
+    const horaAtual = agora.getHours() + ':' + (agora.getMinutes() < 10 ? '0' : '') + agora.getMinutes();
+
+    const linhasDaTabela = document.querySelectorAll('#pausasTable tr');
+    console.log(linhasDaTabela)
+
+    linhasDaTabela.forEach((linha) => {
+        const horarioPausa1 = linha.cells[2].textContent;
+        const refeicaoPausa = linha.cells[3].textContent;
+        const horarioPausa2 = linha.cells[4].textContent;
+
+        if (horarioPausa1 === horaAtual || refeicaoPausa == horaAtual ||  horarioPausa2 === horaAtual) {
+            exibirPopup();
+            return;
+        }
+    });
+}
+
+// Verificar a cada 1 minuto
+setInterval(verificarHoraPausa, 60000);
+
+dismissButton.addEventListener('click', fecharPopup);
