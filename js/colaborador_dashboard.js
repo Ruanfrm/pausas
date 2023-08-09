@@ -165,10 +165,11 @@ function exibirNotificacao() {
 // Função para verificar se é hora da pausa
 function verificarHoraPausa() {
     const agora = new Date();
+
     const horaAtual = agora.getHours() + ':' + (agora.getMinutes() < 10 ? '0' : '') + agora.getMinutes();
 
-    const linhasDaTabela = document.querySelectorAll('#pausasTable tr');
-    console.log(linhasDaTabela)
+
+    const linhasDaTabela = document.querySelectorAll('#pausasTable tr.destacado');
 
     linhasDaTabela.forEach((linha) => {
         const horarioPausa1 = linha.cells[2].textContent;
@@ -183,6 +184,6 @@ function verificarHoraPausa() {
 }
 
 // Verificar a cada 1 minuto
-setInterval(verificarHoraPausa, 60000);
+setInterval(verificarHoraPausa, 45000);
 
 dismissButton.addEventListener('click', fecharPopup);
