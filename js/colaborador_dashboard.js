@@ -184,6 +184,6 @@ function verificarHoraPausa() {
 }
 
 // Verificar a cada 1 minuto
-setInterval(verificarHoraPausa, 45000);
+setInterval(verificarHoraPausa, 10000);
 
 dismissButton.addEventListener('click', fecharPopup);
