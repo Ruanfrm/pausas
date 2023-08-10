@@ -131,13 +131,17 @@ function logout() {
   }
 }
 
-// script.js
+// alertas de pausas
 const popup = document.getElementById('popup');
 const dismissButton = document.getElementById('dismiss-btn');
+const alertSound = new Audio('./alerta.mp3'); // Substitua 'alerta.mp3' pelo nome do seu arquivo de áudio
+
 
 // Função para exibir o pop-up
 function exibirPopup() {
     popup.style.display = 'flex';
+    alertSound.play(); // Reproduzir o alerta sonoro
+
 }
 
 // Função para fechar o pop-up
@@ -167,7 +171,7 @@ function verificarHoraPausa() {
     const agora = new Date();
 
     const horaAtual = agora.getHours() + ':' + (agora.getMinutes() < 10 ? '0' : '') + agora.getMinutes();
-
+    console.log(horaAtual)
 
     const linhasDaTabela = document.querySelectorAll('#pausasTable tr.destacado');
 
@@ -183,7 +187,17 @@ function verificarHoraPausa() {
     });
 }
 
-// Verificar a cada 1 minuto
-setInterval(verificarHoraPausa, 10000);
+// Verificar a cada segundo
+setInterval(() => {
+  const agora = new Date();
+  const segundos = agora.getSeconds();
+  
+  // Verificar no início do segundo para garantir precisão
+  if (segundos === 0) {
+      verificarHoraPausa();
+  }
+}, 1000);
 
 dismissButton.addEventListener('click', fecharPopup);
+
+
