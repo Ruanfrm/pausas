@@ -1,0 +1,24 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página do Colaborador</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/teste_colaborador.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Página do Colaborador</h1>
+        <label for="colaboradorSelect">Selecione seu nome:</label>
+        <select id="colaboradorSelect" class="form-control">
+            <!-- As opções serão preenchidas dinamicamente com os nomes dos colaboradores -->
+        </select>
+        <table id="pausasTable" class="table table-striped mt-3"></table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="./js/firebase-config.js"></script>
+    <script src="./js/teste_colaborador.js"></script>
+</body>
+</html>

@@ -201,3 +201,39 @@ setInterval(() => {
 dismissButton.addEventListener('click', fecharPopup);
 
 
+// cronometro
+let tempoInicial;
+let temporizador;
+
+function iniciarCronometro() {
+    const tempoEmMinutos = parseInt(document.getElementById('tempoEmMinutos').value);
+    if (!tempoEmMinutos || tempoEmMinutos <= 0) {
+        alert('Por favor, insira um valor válido para o tempo em minutos.');
+        return;
+    }
+
+    const tempoEmSegundos = tempoEmMinutos * 60;
+    tempoInicial = Date.now() + tempoEmSegundos * 1000;
+    atualizarTempoRestante();
+
+    temporizador = setInterval(atualizarTempoRestante, 1000);
+}
+
+function pararCronometro() {
+    clearInterval(temporizador);
+    document.getElementById('tempoRestante').innerText = '';
+}
+
+function atualizarTempoRestante() {
+    const agora = Date.now();
+    const tempoRestanteEmMilissegundos = tempoInicial - agora;
+
+    if (tempoRestanteEmMilissegundos <= 0) {
+        clearInterval(temporizador);
+        document.getElementById('tempoRestante').innerText = 'Tempo esgotado!';
+    } else {
+        const minutos = Math.floor(tempoRestanteEmMilissegundos / 60000);
+        const segundos = Math.floor((tempoRestanteEmMilissegundos % 60000) / 1000);
+        document.getElementById('tempoRestante').innerText = `Tempo Restante: ${minutos}m ${segundos}s`;
+    }
+}
